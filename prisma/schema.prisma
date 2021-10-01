@@ -1,0 +1,18 @@
+// using SQLite for database connection
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// to generate Prisma Client
+generator client {
+  provider = "prisma-client-js"
+}
+
+// define structure of the 'Link' database table
+model Link {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  description String
+  url         String
+}
