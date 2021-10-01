@@ -2,20 +2,26 @@ const { ApolloServer } = require("apollo-server");
 const fs = require('fs');
 const path = require('path');
 const { getUserId } = require('./utils')
-const { PrismaClient } = require('@prisma/client')
 const Query = require("./resolvers/Query");
 const Mutation = require("./resolvers/Mutation");
 const User = require("./resolvers/User");
 const Link = require("./resolvers/Link");
+const Subscription = require("./resolvers/Subscription");
+const Vote = require("./resolvers/Vote");
+const { PrismaClient } = require("@prisma/client");
+const { PubSub } = require("apollo-server")
 
 const prisma = new PrismaClient();
+const pubsub = new PubSub();
 
 // the actual implementation of schema
 const resolvers = {
   Query,
   Mutation,
+  Subscription,
   User,
-  Link
+  Link,
+  Vote,
 }
 
 // bundle the schema and resolvers and pass to ApolloServer
@@ -32,6 +38,7 @@ const server = new ApolloServer({
     return {
       ...req,
       prisma,
+      pubsub,
       userId: req && req.headers.authorization ? getUserId(req) : null,
     };
   }
