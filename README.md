@@ -5,3 +5,4 @@
 - Prisma (database toolkit, migrate database schema)
 - Prisma Studio (database GUI)
 - SQLite (in-process library)
+- bcryptjs, jsonwebtoken 
